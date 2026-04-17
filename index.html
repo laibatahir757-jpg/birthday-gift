@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 🎉</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+#typing {
+  font-size: 1.1rem;
+  margin-top: 20px;
+  line-height: 1.6;
+  min-height: 200px;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: white;
+  color: #ff4b7d;
+  font-weight: bold;
+  margin: 10px;
+  cursor: pointer;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-100vh);}
+}
+
+/* Popup cake */
+#cakePopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+  <h1>🎉 Happy Birthday My Husband 🎉</h1>
+
+  <p id="typing"></p>
+
+  <button onclick="showSurprise()">🎁 Click for Surprise</button>
+  <button onclick="showCake()">🎂 Birthday Cake</button>
+</div>
+
+<div id="cakePopup">
+  🎂 Happy Birthday My Love ❤️<br><br>
+  You are my everything 💖
+  <br><br>
+  <button onclick="closeCake()">Close</button>
+</div>
+
+<script>
+// YOUR PARAGRAPH
+const text = `My dearest husband, on your special day, I just want to remind you how deeply you are loved and cherished. You are not only my partner but also my best friend, my biggest support, and the reason behind so many of my smiles. Every moment spent with you feels like a beautiful dream that I never want to wake up from. Your kindness, your strength, and your love make my world brighter every single day. I am so grateful to have you by my side through all the ups and downs of life. Today, I celebrate you — the amazing person you are and the wonderful life we are building together. May your birthday be filled with happiness, laughter, love, and all the things that bring you joy. I pray that all your dreams come true and that we continue to create endless beautiful memories together. Happy Birthday once again, my love. I love you more than words can ever express. ❤️`;
+
+let i = 0;
+
+function typing() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typing, 25);
+  }
+}
+typing();
+
+// Surprise messages
+const messages = [
+  "You are my forever ❤️",
+  "I love you more every day 💖",
+  "You are my happiness 😊",
+  "My heart belongs to you 💘"
+];
+
+function showSurprise() {
+  alert(messages[Math.floor(Math.random() * messages.length)]);
+}
+
+// Cake popup
+function showCake() {
+  document.getElementById("cakePopup").style.display = "block";
+}
+function closeCake() {
+  document.getElementById("cakePopup").style.display = "none";
+}
+
+// Confetti
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+for (let i = 0; i < 120; i++) {
+  confetti.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 6 + 2,
+    d: Math.random() * 50,
+    color: "hsl(" + Math.random() * 360 + ", 100%, 50%)"
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  confetti.forEach(c => {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+    ctx.fillStyle = c.color;
+    ctx.fill();
+  });
+
+  confetti.forEach(c => {
+    c.y += 2;
+    if (c.y > canvas.height) c.y = 0;
+  });
+}
+
+setInterval(draw, 20);
+
+// Floating hearts
+setInterval(() => {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}, 500);
+
+</script>
+
+</body>
+</html>
